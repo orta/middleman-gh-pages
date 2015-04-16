@@ -19,7 +19,7 @@ file GH_PAGES_REF => BUILD_DIR do
 
   cd BUILD_DIR do
     sh "git init"
-    sh "git remote add #{remote_name} #{repo_url}"
+    `git remote add #{remote_name} #{repo_url}`
     sh "git fetch #{remote_name}"
 
     if `git branch -r` =~ /gh-pages/
@@ -29,7 +29,7 @@ file GH_PAGES_REF => BUILD_DIR do
       sh "touch index.html"
       sh "git add ."
       sh "git commit -m 'initial gh-pages commit'"
-      sh "git push #{remote_name} gh-pages"
+      sh `git push #{remote_name} gh-pages --quiet > /dev/null 2>&1`
     end
   end
 end
